@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Backoffice Vista Linda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'coop-green': '#679436',
+                        'coop-blue': '#05668d'
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-montserrat">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-gradient-to-b from-coop-blue via-teal-700 to-coop-green text-white flex-shrink-0">
+            <div class="p-6">
+                <div class="flex items-center space-x-3 mb-8">
+                    <img src="../../Frontend/multimedia/logo_cooperativa.svg" alt="Vista Linda" class="w-10 h-10">
+                    <span class="text-xl font-bold">Vista Linda</span>
+                </div>
+                
+                <nav class="space-y-2">
+                    <a href="admin_dashboard.html" class="flex items-center space-x-3 bg-white bg-opacity-20 px-4 py-3 rounded-lg transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                        </svg>
+                        <span class="font-bold">Dashboard</span>
+                    </a>
+                    
+                    <a href="admin_solicitudes.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                        <span class="font-semibold">Solicitudes de Socios</span>
+                    </a>
+                    
+                    <a href="admin_pagos.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+                            <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-semibold">Verificar Pagos</span>
+                    </a>
+                    
+                    <a href="admin_jornadas.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-semibold">Ver Horas Trabajadas</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-gradient-to-r from-coop-blue to-teal-600 text-white shadow-lg">
+                <div class="px-6 py-4 flex justify-between items-center">
+                    <h1 class="text-2xl font-bold">Vista Linda - Backoffice</h1>
+                    <button onclick="logout()" class="flex items-center space-x-2 bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-bold">Cerrar Sesión</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <h2 class="text-3xl font-bold text-coop-blue mb-6">Dashboard - Panel de Control</h2>
+
+                <!-- Tarjetas de Resumen -->
+                <div class="grid md:grid-cols-4 gap-6 mb-8">
+                    <!-- Solicitudes Pendientes -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold mb-2">Solicitudes Pendientes</p>
+                                <p class="text-4xl font-bold text-blue-600" id="total-solicitudes">0</p>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-full">
+                                <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagos Pendientes -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold mb-2">Pagos Pendientes</p>
+                                <p class="text-4xl font-bold text-yellow-600" id="total-pagos">0</p>
+                            </div>
+                            <div class="bg-yellow-100 p-3 rounded-full">
+                                <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+                                    <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Jornadas Pendientes -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold mb-2">Jornadas Pendientes</p>
+                                <p class="text-4xl font-bold text-green-600" id="total-jornadas">0</p>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-full">
+                                <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Socios Activos -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold mb-2">Socios Activos</p>
+                                <p class="text-4xl font-bold text-purple-600" id="total-socios">0</p>
+                            </div>
+                            <div class="bg-purple-100 p-3 rounded-full">
+                                <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accesos Rápidos -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold text-coop-blue mb-4">Accesos Rápidos</h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <a href="admin_solicitudes.html" class="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition border-2 border-blue-200 hover:border-blue-400">
+                            <div class="bg-blue-100 p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-900">Revisar Solicitudes</p>
+                                <p class="text-sm text-gray-600 font-semibold">Aprobar/rechazar nuevos socios</p>
+                            </div>
+                        </a>
+
+                        <a href="admin_pagos.html" class="flex items-center space-x-3 p-4 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition border-2 border-yellow-200 hover:border-yellow-400">
+                            <div class="bg-yellow-100 p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+                                    <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-900">Verificar Pagos</p>
+                                <p class="text-sm text-gray-600 font-semibold">Revisar comprobantes</p>
+                            </div>
+                        </a>
+
+                        <a href="admin_jornadas.html" class="flex items-center space-x-3 p-4 bg-green-50 hover:bg-green-100 rounded-lg transition border-2 border-green-200 hover:border-green-400">
+                            <div class="bg-green-100 p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-900">Revisar Jornadas</p>
+                                <p class="text-sm text-gray-600 font-semibold">Aprobar horas trabajadas</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Actividad Reciente -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-coop-blue mb-4">Actividad Reciente</h3>
+                    <div id="actividad-lista" class="space-y-3">
+                        <!-- Se llenará dinámicamente -->
+                        <div class="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg border-l-4 border-gray-300">
+                            <svg class="w-5 h-5 text-gray-400 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <p class="font-bold text-gray-600">No hay actividad reciente</p>
+                                <p class="text-sm text-gray-500 font-semibold">Las acciones aparecerán aquí</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Verificar sesión de admin
+        async function verificarSesion() {
+            try {
+                const response = await fetch('../../api_usuarios/verificar_sesion.php', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!data.success || data.tipo_usuario !== 'admin') {
+                    window.location.href = '../../Frontend/landing/login.html';
+                    return;
+                }
+
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                window.location.href = '../../Frontend/landing/login.html';
+            }
+        }
+
+        // Cargar datos del dashboard
+        // Cargar datos del dashboard
+        async function cargarDashboard() {
+            try {
+                // Cargar solicitudes pendientes
+                const solicitudesResp = await fetch('../../api_backoffice/solicitudes/listar_solicitudes.php', {
+                    credentials: 'include'
+                });
+                const solicitudesData = await solicitudesResp.json();
+                if (solicitudesData.success) {
+                    document.getElementById('total-solicitudes').textContent = solicitudesData.solicitudes.length;
+                }
+
+                // Cargar pagos pendientes
+                const pagosResp = await fetch('../../api_backoffice/pagos/listar_pagos_pendientes.php', {
+                    credentials: 'include'
+                });
+                const pagosData = await pagosResp.json();
+                if (pagosData.success) {
+                    document.getElementById('total-pagos').textContent = pagosData.pagos.length;
+                    mostrarActividadPagos(pagosData.pagos.slice(0, 5)); // Últimos 5
+                }
+
+                // Cargar jornadas pendientes
+                const jornadasResp = await fetch('../../api_backoffice/jornadas/listar_jornadas_pendientes.php', {
+                    credentials: 'include'
+                });
+                const jornadasData = await jornadasResp.json();
+                if (jornadasData.success) {
+                    document.getElementById('total-jornadas').textContent = jornadasData.jornadas.length;
+                }
+
+                // Cargar socios activos
+                const sociosResp = await fetch('../../api_backoffice/estadisticas/contar_socios.php', {
+                    credentials: 'include'
+                });
+                const sociosData = await sociosResp.json();
+                if (sociosData.success) {
+                    document.getElementById('total-socios').textContent = sociosData.total_socios;
+                }
+            } catch (error) {
+                console.error('Error al cargar dashboard:', error);
+            }
+        }
+        // Mostrar actividad reciente de pagos
+        function mostrarActividadPagos(pagos) {
+            if (!pagos || pagos.length === 0) return;
+
+            const lista = document.getElementById('actividad-lista');
+            lista.innerHTML = '';
+
+            pagos.forEach(pago => {
+                const div = document.createElement('div');
+                div.className = 'flex items-start space-x-3 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500';
+                div.innerHTML = `
+                    <svg class="w-5 h-5 text-blue-600 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+                        <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                    </svg>
+                    <div>
+                        <p class="font-bold text-gray-900">Pago de $${parseFloat(pago.monto).toFixed(2)} pendiente</p>
+                        <p class="text-sm text-gray-600 font-semibold">${pago.nombre} - ${new Date(pago.fecha_pago).toLocaleDateString('es-UY')}</p>
+                    </div>
+                `;
+                lista.appendChild(div);
+            });
+        }
+
+        // Logout
+        async function logout() {
+            try {
+                await fetch('../../api_usuarios/logout.php', { credentials: 'include' });
+                window.location.href = '../../Frontend/landing/login.html';
+            } catch (error) {
+                window.location.href = '../../Frontend/landing/login.html';
+            }
+        }
+
+        // Inicializar
+        verificarSesion();
+    </script>
+</body>
+</html>

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Jornadas - Backoffice Vista Linda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'coop-green': '#679436',
+                        'coop-blue': '#05668d'
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-montserrat">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-gradient-to-b from-coop-blue via-teal-700 to-coop-green text-white flex-shrink-0">
+            <div class="p-6">
+                <div class="flex items-center space-x-3 mb-8">
+                    <img src="../../Frontend/multimedia/logo_cooperativa.svg" alt="Vista Linda" class="w-10 h-10">
+                    <span class="text-xl font-bold">Vista Linda</span>
+                </div>
+                
+                <nav class="space-y-2">
+                    <a href="admin_dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                        </svg>
+                        <span class="font-semibold">Dashboard</span>
+                    </a>
+                    
+                    <a href="admin_solicitudes.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                        <span class="font-semibold">Solicitudes de Socios</span>
+                    </a>
+                    
+                    <a href="admin_pagos.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+                            <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-semibold">Verificar Pagos</span>
+                    </a>
+                    
+                    <a href="admin_jornadas.html" class="flex items-center space-x-3 bg-white bg-opacity-20 px-4 py-3 rounded-lg transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-bold">Gestionar Jornadas</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-gradient-to-r from-coop-blue to-teal-600 text-white shadow-lg">
+                <div class="px-6 py-4 flex justify-between items-center">
+                    <h1 class="text-2xl font-bold">Vista Linda - Backoffice</h1>
+                    <button onclick="logout()" class="flex items-center space-x-2 bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition font-bold">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Cerrar Sesión</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold text-coop-blue">Gestión de Jornadas</h2>
+                    <button onclick="abrirModalAgregarHoras()" class="bg-gradient-to-r from-red-500 to-red-700 hover:from-red-700 hover:to-red-500 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition flex items-center space-x-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Asignar Horas No Cumplidas</span>
+                    </button>
+                </div>
+
+                <!-- Filtros -->
+                <div class="bg-white rounded-xl shadow-lg p-4 mb-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <label class="font-bold text-gray-700">Filtrar por estado:</label>
+                            <select id="filtro-estado" onchange="filtroEstado = this.value; cargarJornadas();" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-coop-blue focus:border-coop-blue font-semibold">
+                                <option value="todos">Todos los estados</option>
+                                <option value="pendiente">Pendientes</option>
+                                <option value="aprobada">Aprobadas</option>
+                                <option value="rechazada">Rechazadas</option>
+                            </select>
+
+                            <label class="font-bold text-gray-700 ml-6">Filtrar por tipo:</label>
+                            <select id="filtro-tipo" onchange="filtroTipo = this.value; cargarJornadas();" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-coop-blue focus:border-coop-blue font-semibold">
+                                <option value="todos">Todos los tipos</option>
+                                <option value="trabajadas">Horas Trabajadas</option>
+                                <option value="compensatorio">Horas No Cumplidas</option>
+                            </select>
+                        </div>
+                        <button onclick="cargarJornadas()" class="bg-coop-blue hover:bg-teal-700 text-white font-bold px-6 py-2 rounded-lg transition">
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Total de jornadas pendientes -->
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded mb-6">
+                    <p class="text-yellow-900 font-bold">Total de jornadas pendientes: <span id="total-pendientes">0</span></p>
+                </div>
+
+                <!-- Tabla de Jornadas -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-coop-blue text-white">
+                                <tr>
+                                    <th class="px-6 py-4 text-left font-bold">ID</th>
+                                    <th class="px-6 py-4 text-left font-bold">CI SOCIO</th>
+                                    <th class="px-6 py-4 text-left font-bold">NOMBRE</th>
+                                    <th class="px-6 py-4 text-left font-bold">FECHA</th>
+                                    <th class="px-6 py-4 text-left font-bold">TIPO</th>
+                                    <th class="px-6 py-4 text-left font-bold">HORAS</th>
+                                    <th class="px-6 py-4 text-left font-bold">ESTADO</th>
+                                    <th class="px-6 py-4 text-left font-bold">ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-jornadas" class="divide-y divide-gray-200">
+                                <!-- Se llenará dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Estado vacío -->
+                    <div id="sin-jornadas" class="hidden p-12 text-center">
+                        <svg class="w-20 h-20 mx-auto text-gray-300 mb-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-gray-500 font-semibold text-lg">No hay jornadas registradas</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Ver Detalles -->
+    <div id="modal-detalles" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
+                <h3 class="text-2xl font-bold text-coop-blue">Detalles de la Jornada</h3>
+                <button onclick="cerrarModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="contenido-detalles" class="p-6">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Rechazar -->
+    <div id="modal-rechazar" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full">
+            <div class="flex justify-between items-center p-6 border-b border-gray-200">
+                <h3 class="text-2xl font-bold text-red-600">Rechazar Jornada</h3>
+                <button onclick="cerrarModalRechazar()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <label class="block text-sm font-bold text-gray-700 mb-2">Motivo del rechazo:</label>
+                <textarea id="motivo-rechazo" rows="4" required
+                    placeholder="Especifique el motivo..."
+                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-none"></textarea>
+
+                <div class="flex gap-3 mt-6">
+                    <button onclick="confirmarRechazo()" class="flex-1 bg-gradient-to-r from-red-500 to-red-700 hover:from-red-700 hover:to-red-500 text-white font-bold py-3 rounded-lg transition">
+                        Confirmar Rechazo
+                    </button>
+                    <button onclick="cerrarModalRechazar()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-lg transition">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Asignar Horas No Cumplidas -->
+    <div id="modal-agregar-horas" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+            <div class="flex justify-between items-center p-6 border-b border-gray-200">
+                <h3 class="text-2xl font-bold text-red-600">Asignar Horas No Cumplidas</h3>
+                <button onclick="cerrarModalAgregarHoras()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="m-6 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                <p class="text-sm text-yellow-800 font-bold">Esto generará automáticamente un pago compensatorio de $400 por hora.</p>
+            </div>
+
+            <form id="form-agregar-horas" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">CI del Socio *</label>
+                    <input type="number" name="ci_socio" required
+                        placeholder="Ej: 12345678"
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Fecha *</label>
+                    <input type="date" name="fecha" required
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Horas No Cumplidas *</label>
+                    <input type="number" name="horas" min="0.5" step="0.5" required
+                        placeholder="Ej: 2"
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Motivo *</label>
+                    <textarea name="motivo" rows="4" required
+                        placeholder="Explica el motivo..."
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-none"></textarea>
+                </div>
+
+                <div class="flex gap-3 pt-4">
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-red-500 to-red-700 hover:from-red-700 hover:to-red-500 text-white font-bold py-3 rounded-lg transition">
+                        Asignar
+                    </button>
+                    <button type="button" onclick="cerrarModalAgregarHoras()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-lg transition">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let todasJornadas = [];
+        let jornadaActual = null;
+        let filtroEstado = 'todos';
+        let filtroTipo = 'todos';
+
+        // Verificar sesión
+        async function verificarSesion() {
+            try {
+                const response = await fetch('../../api_usuarios/verificar_sesion.php', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!data.success || data.tipo_usuario !== 'admin') {
+                    window.location.href = '../../Frontend/landing/login.html';
+                    return;
+                }
+
+                cargarJornadas();
+            } catch (error) {
+                console.error('Error:', error);
+                window.location.href = '../../Frontend/landing/login.html';
+            }
+        }
+
+        // Cargar jornadas
+        async function cargarJornadas() {
+            try {
+                const params = new URLSearchParams();
+                if (filtroEstado !== 'todos') params.append('estado', filtroEstado);
+                if (filtroTipo !== 'todos') params.append('tipo', filtroTipo);
+                
+                const url = '../../api_backoffice/jornadas/listar_jornadas.php' + 
+                           (params.toString() ? '?' + params.toString() : '');
+                
+                const response = await fetch(url, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    todasJornadas = data.jornadas;
+                    actualizarContadores();
+                    mostrarJornadas(todasJornadas);
+                }
+            } catch (error) {
+                console.error('Error al cargar jornadas:', error);
+            }
+        }
+
+        // Actualizar contadores
+        function actualizarContadores() {
+            const pendientes = todasJornadas.filter(j => j.estado === 'pendiente').length;
+            document.getElementById('total-pendientes').textContent = pendientes;
+        }
+
+        // Mostrar jornadas
+        function mostrarJornadas(jornadas) {
+            const tabla = document.getElementById('tabla-jornadas');
+            const sinJornadas = document.getElementById('sin-jornadas');
+
+            if (!jornadas || jornadas.length === 0) {
+                tabla.innerHTML = '';
+                sinJornadas.classList.remove('hidden');
+                return;
+            }
+
+            sinJornadas.classList.add('hidden');
+            tabla.innerHTML = jornadas.map(j => {
+                const tipoTexto = j.tipo === 'trabajadas' ? 'Trabajadas' : 'No Cumplidas';
+                const tipoClass = j.tipo === 'trabajadas' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+
+                const estadoTexto = {
+                    'pendiente': 'Pendiente',
+                    'aprobada': 'Aprobada',
+                    'rechazada': 'Rechazada'
+                }[j.estado] || j.estado;
+
+                const estadoClass = {
+                    'pendiente': 'bg-yellow-100 text-yellow-800',
+                    'aprobada': 'bg-green-100 text-green-800',
+                    'rechazada': 'bg-red-100 text-red-800'
+                }[j.estado] || 'bg-gray-100 text-gray-800';
+
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-bold text-gray-900">${j.id_jornada}</td>
+                        <td class="px-6 py-4 font-semibold text-gray-700">${j.ci_socio}</td>
+                        <td class="px-6 py-4 font-semibold text-gray-700">${j.nombre_completo || 'Sin nombre'}</td>
+                        <td class="px-6 py-4 font-semibold text-gray-700">${new Date(j.fecha).toLocaleDateString('es-UY')}</td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold ${tipoClass}">${tipoTexto}</span>
+                        </td>
+                        <td class="px-6 py-4 font-bold text-gray-900">${parseFloat(j.horas_trabajadas).toFixed(1)}h</td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold ${estadoClass}">${estadoTexto}</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <button onclick='verDetalles(${JSON.stringify(j)})' class="text-coop-blue hover:text-coop-green font-bold transition">
+                                Ver Detalles
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Ver detalles
+        async function verDetalles(jornada) {
+            jornadaActual = jornada;
+            
+            try {
+                const response = await fetch(`../../api_backoffice/jornadas/obtener_jornada.php?id=${jornada.id_jornada}`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    mostrarDetalles(data.jornada);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarDetalles(jornada);
+            }
+        }
+
+        function mostrarDetalles(jornada) {
+            const contenido = document.getElementById('contenido-detalles');
+            
+            const tipoTexto = jornada.tipo === 'trabajadas' ? 'Horas Trabajadas' : 'Horas No Cumplidas';
+            const estadoTexto = {
+                'pendiente': 'Pendiente',
+                'aprobada': 'Aprobada',
+                'rechazada': 'Rechazada'
+            }[jornada.estado] || jornada.estado;
+
+            const estadoClass = {
+                'pendiente': 'bg-yellow-100 text-yellow-800',
+                'aprobada': 'bg-green-100 text-green-800',
+                'rechazada': 'bg-red-100 text-red-800'
+            }[jornada.estado];
+            
+            contenido.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <p class="text-sm text-gray-600 font-semibold mb-1">ID Jornada:</p>
+                        <p class="font-bold text-gray-900">${jornada.id_jornada}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 font-semibold mb-1">CI Socio:</p>
+                        <p class="font-bold text-gray-900">${jornada.ci_socio}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 font-semibold mb-1">Nombre:</p>
+                        <p class="font-bold text-gray-900">${jornada.nombre_completo || 'Sin nombre'}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 font-semibold mb-1">Tipo:</p>
+                        <p class="font-bold text-gray-900">${tipoTexto}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 font-semibold mb-1">Fecha:</p>
+                        <p class="font-bold text-gray-900">${new Date(jornada.fecha).toLocaleDateString('es-UY')}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 font-semibold mb-1">Horas:</p>
+                        <p class="font-bold text-gray-900">${parseFloat(jornada.horas_trabajadas).toFixed(1)} horas</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 font-semibold mb-1">Estado:</p>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold ${estadoClass}">${estadoTexto}</span>
+                    </div>
+                    <div class="md:col-span-2">
+                        <p class="text-sm text-gray-600 font-semibold mb-1">Descripción:</p>
+                        <p class="text-gray-700 font-semibold">${jornada.descripcion || 'Sin descripción'}</p>
+                    </div>
+                </div>
+
+                ${jornada.estado === 'pendiente' ? `
+                    <div class="flex gap-3 pt-4">
+                        <button onclick="aprobarJornada()" class="flex-1 bg-gradient-to-r from-coop-green to-green-700 hover:from-green-700 hover:to-coop-green text-white font-bold py-3 rounded-lg transition">
+                            Aprobar Jornada
+                        </button>
+                        <button onclick="abrirModalRechazar()" class="flex-1 bg-gradient-to-r from-red-500 to-red-700 hover:from-red-700 hover:to-red-500 text-white font-bold py-3 rounded-lg transition">
+                            Rechazar
+                        </button>
+                        <button onclick="cerrarModal()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-lg transition">
+                            Cancelar
+                        </button>
+                    </div>
+                ` : `
+                    <div class="flex justify-center pt-4">
+                        <button onclick="cerrarModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold px-8 py-3 rounded-lg transition">
+                            Cerrar
+                        </button>
+                    </div>
+                `}
+            `;
+
+            document.getElementById('modal-detalles').classList.remove('hidden');
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-detalles').classList.add('hidden');
+            jornadaActual = null;
+        }
+
+        // Aprobar jornada
+        async function aprobarJornada() {
+            if (!jornadaActual) return;
+
+            try {
+                const formData = new FormData();
+                formData.append('id_jornada', jornadaActual.id_jornada);
+                formData.append('accion', 'aprobar');
+
+                const response = await fetch('../../api_backoffice/jornadas/procesar_jornada.php', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('¡Jornada aprobada exitosamente!');
+                    cerrarModal();
+                    cargarJornadas();
+                } else {
+                    alert(data.message || 'Error al procesar la jornada');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión');
+            }
+        }
+
+        // Modal rechazar
+        function abrirModalRechazar() {
+            cerrarModal();
+            document.getElementById('modal-rechazar').classList.remove('hidden');
+        }
+
+        function cerrarModalRechazar() {
+            document.getElementById('modal-rechazar').classList.add('hidden');
+            document.getElementById('motivo-rechazo').value = '';
+        }
+
+        async function confirmarRechazo() {
+            if (!jornadaActual) return;
+
+            const motivo = document.getElementById('motivo-rechazo').value.trim();
+            if (!motivo) {
+                alert('Debe especificar un motivo de rechazo');
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('id_jornada', jornadaActual.id_jornada);
+                formData.append('accion', 'rechazar');
+                formData.append('motivo', motivo);
+
+                const response = await fetch('../../api_backoffice/jornadas/procesar_jornada.php', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Jornada rechazada');
+                    cerrarModalRechazar();
+                    jornadaActual = null;
+                    cargarJornadas();
+                } else {
+                    alert(data.message || 'Error al procesar la jornada');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión');
+            }
+        }
+
+        // Modal agregar horas no cumplidas
+        function abrirModalAgregarHoras() {
+            document.getElementById('modal-agregar-horas').classList.remove('hidden');
+        }
+
+        function cerrarModalAgregarHoras() {
+            document.getElementById('modal-agregar-horas').classList.add('hidden');
+            document.getElementById('form-agregar-horas').reset();
+        }
+
+        document.getElementById('form-agregar-horas').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch('../../api_backoffice/jornadas/agregar_horas_no_cumplidas.php', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(`Horas no cumplidas asignadas. Pago compensatorio generado: $${data.pago_compensatorio}`);
+                    cerrarModalAgregarHoras();
+                    cargarJornadas();
+                } else {
+                    alert(data.message || 'Error al asignar horas');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión');
+            }
+        });
+
+        // Logout
+        async function logout() {
+            try {
+                await fetch('../../api_usuarios/logout.php', { credentials: 'include' });
+                window.location.href = '../../Frontend/landing/login.html';
+            } catch (error) {
+                window.location.href = '../../Frontend/landing/login.html';
+            }
+        }
+
+        verificarSesion();
+    </script>
+</body>
+</html>

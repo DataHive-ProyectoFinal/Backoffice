@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+     <!-- Backoffice/vista/admin_solicitudes.html -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitudes - Backoffice Vista Linda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'coop-green': '#679436',
+                        'coop-blue': '#05668d'
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-montserrat">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-gradient-to-b from-coop-blue via-teal-700 to-coop-green text-white flex-shrink-0">
+            <div class="p-6">
+                <div class="flex items-center space-x-3 mb-8">
+                    <img src="../../Frontend/multimedia/logo_cooperativa.svg" alt="Vista Linda" class="w-10 h-10">
+                    <span class="text-xl font-bold">Vista Linda</span>
+                </div>
+                
+                <nav class="space-y-2">
+                    <a href="admin_dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                        </svg>
+                        <span class="font-semibold">Dashboard</span>
+                    </a>
+                    
+                    <a href="admin_solicitudes.html" class="flex items-center space-x-3 bg-white bg-opacity-20 px-4 py-3 rounded-lg transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                        <span class="font-bold">Solicitudes de Socios</span>
+                    </a>
+                    
+                    <a href="admin_pagos.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+                            <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-semibold">Verificar Pagos</span>
+                    </a>
+                    
+                    <a href="admin_jornadas.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-semibold">Ver Horas Trabajadas</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-gradient-to-r from-coop-blue to-teal-600 text-white shadow-lg">
+                <div class="px-6 py-4 flex justify-between items-center">
+                    <h1 class="text-2xl font-bold">Vista Linda - Backoffice</h1>
+                    <button onclick="logout()" class="flex items-center space-x-2 bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-bold">Cerrar Sesión</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <h2 class="text-3xl font-bold text-coop-blue mb-6">Gestión de Solicitudes de Ingreso</h2>
+
+                <!-- Tabla de Solicitudes -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-coop-blue text-white">
+                                <tr>
+                                    <th class="px-6 py-4 text-left font-bold">CI</th>
+                                    <th class="px-6 py-4 text-left font-bold">NOMBRE</th>
+                                    <th class="px-6 py-4 text-left font-bold">EMAIL</th>
+                                    <th class="px-6 py-4 text-left font-bold">TELÉFONO</th>
+                                    <th class="px-6 py-4 text-left font-bold">FECHA</th>
+                                    <th class="px-6 py-4 text-left font-bold">ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-solicitudes" class="divide-y divide-gray-200">
+                                <!-- Se llenará dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Estado vacío -->
+                    <div id="sin-solicitudes" class="hidden p-12 text-center">
+                        <svg class="w-20 h-20 mx-auto text-gray-300 mb-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                        <p class="text-gray-500 font-semibold text-lg">No hay solicitudes pendientes</p>
+                        <p class="text-gray-400 font-semibold">Las nuevas solicitudes aparecerán aquí</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Ver Detalles -->
+    <div id="modal-detalles" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center p-6 border-b border-gray-200 sticky top-0 bg-white">
+                <h3 class="text-2xl font-bold text-coop-blue">Detalles de la Solicitud</h3>
+                <button onclick="cerrarModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="contenido-detalles" class="p-6">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Rechazar -->
+    <div id="modal-rechazar" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+            <div class="flex justify-between items-center p-6 border-b border-gray-200">
+                <h3 class="text-2xl font-bold text-red-600">¿Rechazar Solicitud?</h3>
+                <button onclick="cerrarModalRechazar()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+
+            <p class="px-6 pt-4 text-gray-700 font-semibold">Esta acción no se puede deshacer.</p>
+            
+            <div class="p-6 flex gap-3">
+                <button onclick="confirmarRechazo()" class="flex-1 bg-gradient-to-r from-red-500 to-red-700 hover:from-red-700 hover:to-red-500 text-white font-bold py-3 rounded-lg transition">
+                    Rechazar
+                </button>
+                <button onclick="cerrarModalRechazar()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-lg transition">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let solicitudes = [];
+        let solicitudActual = null;
+
+        // Verificar sesión
+        async function verificarSesion() {
+            try {
+                const response = await fetch('../../api_usuarios/verificar_sesion.php', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!data.success || data.tipo_usuario !== 'admin') {
+                    window.location.href = '../../Frontend/landing/login.html';
+                    return;
+                }
+
+                cargarSolicitudes();
+            } catch (error) {
+                console.error('Error:', error);
+                window.location.href = '../../Frontend/landing/login.html';
+            }
+        }
+
+        // Cargar solicitudes
+        async function cargarSolicitudes() {
+            try {
+                const response = await fetch('../../api_backoffice/solicitudes/listar_solicitudes.php', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    solicitudes = data.solicitudes;
+                    mostrarSolicitudes(solicitudes);
+                }
+            } catch (error) {
+                console.error('Error al cargar solicitudes:', error);
+            }
+        }
+
+        // Mostrar solicitudes en tabla
+        function mostrarSolicitudes(lista) {
+            const tabla = document.getElementById('tabla-solicitudes');
+            const sinSolicitudes = document.getElementById('sin-solicitudes');
+
+            if (!lista || lista.length === 0) {
+                tabla.innerHTML = '';
+                sinSolicitudes.classList.remove('hidden');
+                return;
+            }
+
+            sinSolicitudes.classList.add('hidden');
+            tabla.innerHTML = lista.map(s => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 font-bold text-gray-900">${s.ci}</td>
+                    <td class="px-6 py-4 font-semibold text-gray-700">${s.nombre_completo}</td>
+                    <td class="px-6 py-4 font-semibold text-gray-700">${s.gmail}</td>
+                    <td class="px-6 py-4 font-semibold text-gray-700">${s.telefono_celular}</td>
+                    <td class="px-6 py-4 font-semibold text-gray-700">${new Date(s.fecha_solicitud).toLocaleDateString('es-UY')}</td>
+                    <td class="px-6 py-4">
+                        <button onclick='verDetalles(${JSON.stringify(s)})' class="text-coop-blue hover:text-coop-green font-bold transition">
+                            Ver
+                        </button>
+                        <span class="mx-2 text-gray-300">|</span>
+                        <button onclick='verDetalles(${JSON.stringify(s)})' class="text-red-600 hover:text-red-800 font-bold transition">
+                            Rechazar
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Ver detalles
+        function verDetalles(solicitud) {
+            solicitudActual = solicitud;
+            const contenido = document.getElementById('contenido-detalles');
+            
+            contenido.innerHTML = `
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-4">Datos Personales</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">CI:</p>
+                                <p class="font-bold text-gray-900">${solicitud.ci}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">Nombre:</p>
+                                <p class="font-bold text-gray-900">${solicitud.nombre_completo}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">Fecha Nac:</p>
+                                <p class="font-bold text-gray-900">${new Date(solicitud.fecha_nacimiento).toLocaleDateString('es-UY')}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">Género:</p>
+                                <p class="font-bold text-gray-900">${solicitud.genero}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-4">Contacto</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">Email:</p>
+                                <p class="font-bold text-gray-900">${solicitud.gmail}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">Celular:</p>
+                                <p class="font-bold text-gray-900">${solicitud.telefono_celular}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">Tel. Fijo:</p>
+                                <p class="font-bold text-gray-900">${solicitud.telefono_fijo || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">Dirección:</p>
+                                <p class="font-bold text-gray-900">${solicitud.direccion}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-4">Información Familiar y Socioeconómica</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">Cantidad Familia:</p>
+                                <p class="font-bold text-gray-900">${solicitud.cantidad_familia}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">Ocupación:</p>
+                                <p class="font-bold text-gray-900">${solicitud.ocupacion}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 font-semibold">Ingreso:</p>
+                                <p class="font-bold text-gray-900">${solicitud.ingreso}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-2">Motivo de Interés</h4>
+                        <p class="text-gray-700 font-semibold bg-gray-50 p-4 rounded-lg">${solicitud.motivo_interes}</p>
+                    </div>
+
+                    <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-coop-blue">
+                        <h4 class="text-lg font-bold text-coop-blue mb-2">Crear Usuario Socio</h4>
+                        <p class="text-sm text-gray-700 font-semibold mb-3">Cédula (Usuario): <span class="font-bold">${solicitud.ci}</span></p>
+                        <div class="bg-white p-3 rounded border border-blue-200">
+                            <p class="text-xs text-gray-600 font-semibold mb-1">Contraseña Generada:</p>
+                            <p class="font-mono font-bold text-coop-blue" id="password-generada">${generarPassword(solicitud.nombre_completo, solicitud.ci)}</p>
+                        </div>
+                        <button onclick="copiarPassword()" class="mt-2 text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold px-3 py-1 rounded transition">
+                            Copiar
+                        </button>
+                    </div>
+
+                    <div class="flex gap-3 pt-4">
+                        <button onclick="aprobarSolicitud()" class="flex-1 bg-gradient-to-r from-coop-green to-green-700 hover:from-green-700 hover:to-coop-green text-white font-bold py-3 rounded-lg transition">
+                            Aceptar y Crear Socio
+                        </button>
+                        <button onclick="abrirModalRechazar()" class="flex-1 bg-gradient-to-r from-red-500 to-red-700 hover:from-red-700 hover:to-red-500 text-white font-bold py-3 rounded-lg transition">
+                            Rechazar
+                        </button>
+                        <button onclick="cerrarModal()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-lg transition">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('modal-detalles').classList.remove('hidden');
+        }
+
+        // Generar contraseña
+        function generarPassword(nombre, ci) {
+            const apellido = nombre.split(' ').pop().toLowerCase();
+            const ultimos4 = ci.toString().slice(-4);
+            return `${apellido}${ultimos4}`;
+        }
+
+        // Copiar password
+        function copiarPassword() {
+            const password = document.getElementById('password-generada').textContent;
+            navigator.clipboard.writeText(password);
+            alert('Contraseña copiada al portapapeles');
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-detalles').classList.add('hidden');
+            solicitudActual = null;
+        }
+
+        // ========== FUNCIÓN CORREGIDA: APROBAR SOLICITUD ==========
+        async function aprobarSolicitud() {
+            if (!solicitudActual) return;
+
+            try {
+                const formData = new FormData();
+                formData.append('ci', solicitudActual.ci);
+                formData.append('accion', 'aprobar');
+
+                const response = await fetch('../../api_backoffice/solicitudes/procesar_solicitud.php', {
+                    method: 'POST',
+                    body: formData,  // ← SIN headers, FormData maneja todo
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(`¡Solicitud aprobada!\n\nUsuario: ${solicitudActual.ci}\nContraseña: ${data.contrasena_temporal}\n\nRecuerda comunicarle al socio sus credenciales.`);
+                    cerrarModal();
+                    cargarSolicitudes();
+                } else {
+                    alert(data.message || 'Error al procesar la solicitud');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión');
+            }
+        }
+
+        // Modal rechazar
+        function abrirModalRechazar() {
+            cerrarModal();
+            document.getElementById('modal-rechazar').classList.remove('hidden');
+        }
+
+        function cerrarModalRechazar() {
+            document.getElementById('modal-rechazar').classList.add('hidden');
+        }
+
+        // ========== FUNCIÓN CORREGIDA: RECHAZAR SOLICITUD ==========
+        async function confirmarRechazo() {
+            if (!solicitudActual) return;
+
+            try {
+                const formData = new FormData();
+                formData.append('ci', solicitudActual.ci);
+                formData.append('accion', 'rechazar');
+
+                const response = await fetch('../../api_backoffice/solicitudes/procesar_solicitud.php', {
+                    method: 'POST',
+                    body: formData,  // ← SIN headers, FormData maneja todo
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Solicitud rechazada');
+                    cerrarModalRechazar();
+                    solicitudActual = null;
+                    cargarSolicitudes();
+                } else {
+                    alert(data.message || 'Error al procesar la solicitud');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión');
+            }
+        }
+
+        // Logout
+        async function logout() {
+            try {
+                await fetch('../../api_usuarios/logout.php', { credentials: 'include' });
+                window.location.href = '../../Frontend/landing/login.html';
+            } catch (error) {
+                window.location.href = '../../Frontend/landing/login.html';
+            }
+        }
+
+        // Inicializar
+        verificarSesion();
+    </script>
+</body>
+</html>
